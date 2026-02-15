@@ -21,9 +21,13 @@ namespace MyTestEx.Scripts.EntryPoint
         [OnStart]
         private void StartThis()
         {
-            Settings.Model.Set("_spinRewardSpeed", 0);
             Settings.Fsm = new FSM();
-            Settings.Fsm.Add(new SpinState());
+            Settings.Fsm.Add(new InitState());
+            Settings.Fsm.Add(new StartSpinState());
+            Settings.Fsm.Add(new SpinningState());
+            Settings.Fsm.Add(new StopSpinState());
+
+            Settings.Fsm.Start("Init");
         }
         
         [OnUpdate]
@@ -35,11 +39,18 @@ namespace MyTestEx.Scripts.EntryPoint
         [Bind(EventName.ON_START_BUTTON_CLICKED)]
         private void StartSpinState()
         {
-            Debug.Log("StartSpinState");
-            Settings.Fsm.Start("Spin");
-
+            Settings.Fsm.Start("StartSpin");
             Path = new CPath();
-            Path.EasingLinear(3, 0f, -1000f, value => Model.Set(VariableName.SPIN_REWARD_SPEED, value));
+            Path.EasingLinear(3, 0f, -1500f, value => Model.Set(VariableName.SPIN_REWARD_SPEED, value))
+                .Action(() => Settings.Fsm.Change("Spinning"));
+        }
+
+        [Bind(EventName.ON_STOP_BUTTON_CLICKED)]
+        private void StopSpinState()
+        {
+            Settings.Fsm.Start("StopSpin");
+            Path.EasingLinear(3, -200f, 0f, value => Model.Set(VariableName.SPIN_REWARD_SPEED, value))
+                .Action(() => Settings.Fsm.Change("StopSpin"));
         }
     }
 }
