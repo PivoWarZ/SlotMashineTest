@@ -49,7 +49,7 @@ namespace MyTestEx.Scripts.EntryPoint
         private void StopSpinState()
         {
             Settings.Fsm.Start("StopSpin");
-            Path.EasingLinear(3, -200f, 0f, value => Model.Set(VariableName.SPIN_REWARD_SPEED, value))
+            Path.EasingLinear(3, -1500f, -80f, value => Model.Set(VariableName.SPIN_REWARD_SPEED, value))
                 .Action(() => Settings.Fsm.Change("StopSpin"));
         }
     }

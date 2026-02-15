@@ -39,28 +39,30 @@ namespace MyTestEx.UI
 
         private void StopSpinning(Reward targetReward)
         {
-            var delta = GetDeltaPosition(targetReward.Rect);
-            Debug.Log(delta);
-            
-            _speed = delta > 0.01f
-                ? _speed * delta
+            Debug.Log($"TARGET POSITION {GetTargetPosition()} {targetReward.Rect.localPosition.y > GetTargetPosition()}");
+            _speed = targetReward.Rect.localPosition.y > GetTargetPosition()
+                ? _speed
                 : 0f;
+            
+            Debug.Log($"SPEED {_speed}");
+            Debug.Log($"SPEED MODEL {Model.GetFloat(VariableName.SPIN_REWARD_SPEED)}");
         }
 
         private Reward GetTargetReward()
         {
             var targetReward = _rewards
-                .Where(r => r.transform.localPosition.y > -750f)
+                .Where(r => r.transform.localPosition.y > GetTargetPosition())
                 .OrderBy(r => Mathf.Abs(r.transform.localPosition.y))
                 .FirstOrDefault();
+            
+            Debug.Log($"TARGET {targetReward.gameObject.name}");
             
             return targetReward;
         }
 
-        private float GetDeltaPosition(RectTransform rectTransform)
+        private float GetTargetPosition()
         {
-            
-            return Math.Abs(rectTransform.localPosition.y + rectTransform.rect.height / 2) + _rectTransform.rect.height / 2;
+            return - _rectTransform.rect.height / _rewards.Length;
         }
 
         private void OnStop()
@@ -85,7 +87,6 @@ namespace MyTestEx.UI
             if (_isStopped)
             {
                 StopSpinning(_targetReward);
-                return;
             }
             
             Spin();
