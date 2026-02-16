@@ -3,28 +3,34 @@ using AxGrid.Base;
 using AxGrid.Model;
 using MyTestEx.Scripts.Rewards;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace MyTestEx.Scripts.UI
 {
     public class SlotsView: MonoBehaviourExtBind
     {
         [SerializeField] Reward[] _rewards;
-        [SerializeField] Button _startButton;
-        [SerializeField] Button _stopButton;
         private float _speed;
         private RectTransform _rectTransform;
         private Reward _targetReward;
         private bool _isStopped;
         private const string ON_SPIN_REWARD_SPEED_CHANGED = "On" + VariableName.SPIN_REWARD_SPEED + "Changed";
-
-        [OnAwake]
-        private void AwakeThis()
+        
+        [OnStart]
+        private void StartThis()
         {
-            _startButton.onClick.AddListener(OnStart);
-            _stopButton.onClick.AddListener(OnStop);
             _rectTransform = GetComponent<RectTransform>();
+            _rewards = GetComponentsInChildren<Reward>();
+            
+            Model.Set(VariableName.MAX_SPIN_SPEED, -1500f);
+            Model.Set(VariableName.MIN_SPIN_SPEED, -80f);
+            
+            Model.Set(VariableName.START_SPIN_TIME, 3f);
+            Model.Set(VariableName.STOP_SPIN_TIME, 3f);
+            
+            Model.EventManager.Invoke(EventName.ON_REWARDING_START);
         }
+
+
 
         [Bind(EventName.ON_SPINNING_COMPLETE)]
         private void OnCloser()
@@ -54,23 +60,9 @@ namespace MyTestEx.Scripts.UI
         {
             return - _rectTransform.rect.height / _rewards.Length;
         }
+        
 
-        private void OnStop()
-        {
-            Model.EventManager.Invoke(EventName.ON_STOP_BUTTON_CLICKED);
-        }
 
-        private void OnStart()
-        {
-            Model.EventManager.Invoke(EventName.ON_START_BUTTON_CLICKED);
-        }
-
-        [OnStart]
-        private void StartThis()
-        {
-           _rewards = GetComponentsInChildren<Reward>();
-           Model.EventManager.Invoke(EventName.ON_REWARDING_START);
-        }
 
         [OnUpdate]
         private void UpdateThis()
@@ -107,12 +99,6 @@ namespace MyTestEx.Scripts.UI
         private void SetSpeed(float speed)
         {
             _speed = speed;
-        }
-
-        [OnDestroy]
-        private void OnDestroyThis()
-        {
-            _startButton.onClick.RemoveListener(OnStart);
         }
     }
 }

@@ -21,7 +21,6 @@ namespace MyTestEx.Scripts.UI
 
         private void HideChestsStates()
         {
-            Debug.Log("HideChestsStates");
             for (int i = 1; i < _chests.Length; i++)
             {
                 Color color = _chests[i].color;
@@ -32,16 +31,12 @@ namespace MyTestEx.Scripts.UI
 
         private void Animate()
         {
-            Debug.Log("Animate");
             Path = new CPath();
             
             for (int i = 0; i < _chests.Length - 2; i++) 
             {
-                Debug.Log(i);
                 var current = _chests[i];
                 var next = _chests[i + 1];
-                Debug.Log(current.gameObject.name);
-                Debug.Log(next.gameObject.name);
 
                 Path.EasingLinear(0.5f, 1f, 0,
                         value =>

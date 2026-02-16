@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1066606027952278744}
   - component: {fileID: 5238824117520843910}
   - component: {fileID: 2412062037416362335}
+  - component: {fileID: 4793100893501525385}
   m_Layer: 5
   m_Name: StopButton
   m_TagString: Untagged
@@ -120,6 +121,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4793100893501525385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2727010677643007790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd4ad472c4ea459db43ab6a142fc42ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MyTestEx::MyTestEx.Scripts.UI.UiButtonListener
+  _button: {fileID: 2412062037416362335}
+  _eventName: OnStopButtonClicked
 --- !u!1 &3780116646161487249
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,7 +337,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3925458447091610937}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -341,6 +356,7 @@ GameObject:
   - component: {fileID: 7059381815107560593}
   - component: {fileID: 8430339181672152791}
   - component: {fileID: 4448230243780722908}
+  - component: {fileID: 625143155289528716}
   m_Layer: 5
   m_Name: Slots
   m_TagString: Untagged
@@ -448,8 +464,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: MyTestEx::MyTestEx.UI.SlotsView
   globalModel: 0
   _rewards: []
-  _startButton: {fileID: 6119689670022067731}
-  _stopButton: {fileID: 2412062037416362335}
 --- !u!222 &8430339181672152791
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -488,6 +502,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &625143155289528716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5090196655623700217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 682db7f76602435d9f378089c193bdf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MyTestEx::MyTestEx.Scripts.UI.ButtonManager
+  globalModel: 0
+  _startButton: {fileID: 6119689670022067731}
+  _stopButton: {fileID: 2412062037416362335}
 --- !u!1 &5182337944054109259
 GameObject:
   m_ObjectHideFlags: 0
@@ -819,6 +848,7 @@ GameObject:
   - component: {fileID: 6165590928233485185}
   - component: {fileID: 3268407433735599977}
   - component: {fileID: 6119689670022067731}
+  - component: {fileID: 7710444351016098489}
   m_Layer: 5
   m_Name: StartButton
   m_TagString: Untagged
@@ -927,3 +957,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7710444351016098489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9047472952750125466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd4ad472c4ea459db43ab6a142fc42ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MyTestEx::MyTestEx.Scripts.UI.UiButtonListener
+  _button: {fileID: 6119689670022067731}
+  _eventName: OnStartButtonClicked
