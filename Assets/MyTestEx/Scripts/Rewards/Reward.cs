@@ -1,7 +1,7 @@
 ﻿using AxGrid.Base;
 using UnityEngine;
 
-namespace MyTestEx.Scripts
+namespace MyTestEx.Scripts.Rewards
 {
     public abstract class Reward: MonoBehaviourExt
     {

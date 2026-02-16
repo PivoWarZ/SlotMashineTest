@@ -1,4 +1,4 @@
-﻿namespace MyTestEx.Scripts
+﻿namespace MyTestEx.Scripts.Rewards
 {
     public interface IRewardDealer
     {

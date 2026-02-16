@@ -1,7 +1,6 @@
-﻿using MyTestEx.Scripts;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace MyTestEx
+namespace MyTestEx.Scripts.Rewards
 {
     public class StubReward: Reward
     {
