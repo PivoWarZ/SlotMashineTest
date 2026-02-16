@@ -65,7 +65,7 @@ namespace MyTestEx.Scripts.UI
         
         private float GetTargetPosition()
         {
-            return - _rectTransform.rect.height / _rewards.Length;
+            return - _rectTransform.rect.height / 2;
         }
 
         private void AnimateReward()
@@ -108,8 +108,9 @@ namespace MyTestEx.Scripts.UI
             var targetReward = _rewards
                 .Where(r => r.transform.localPosition.y > GetTargetPosition())
                 .OrderBy(r => Mathf.Abs(r.transform.localPosition.y))
-                .FirstOrDefault();
+                .LastOrDefault();
             
+            Debug.Log(targetReward.gameObject.name);
             return targetReward;
         }
     }
