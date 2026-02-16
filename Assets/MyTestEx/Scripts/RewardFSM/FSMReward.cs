@@ -20,7 +20,6 @@ namespace MyTestEx.Scripts.RewardFSM
             }
 
             Settings.Fsm.Update(Time.deltaTime);
-            Debug.Log(Settings.Fsm.CurrentStateName);
         }
 
         [Bind(EventName.ON_REWARDING_START)]
@@ -37,23 +36,23 @@ namespace MyTestEx.Scripts.RewardFSM
             _isInitialised = true;
             Debug.Log("FSM Init");
         }
-
-
+        
         [Bind(EventName.ON_START_BUTTON_CLICKED)]
         private void OnStartSpinState()
         {
             Settings.Fsm.Change("StartSpin");
-            //Path = new CPath();
-            //Path.EasingLinear(3, 0f, -1500f, value => Model.Set(VariableName.SPIN_REWARD_SPEED, value))
-                //.Action(() => Settings.Fsm.Change("Spinning"));
         }
 
         [Bind(EventName.ON_STOP_BUTTON_CLICKED)]
         private void StopSpinState()
         {
             Settings.Fsm.Change("StopSpin");
-            //Path.EasingLinear(3, -1500f, -80f, value => Model.Set(VariableName.SPIN_REWARD_SPEED, value))
-               // .Action(() => Settings.Fsm.Change("StopSpin"));
+        }
+
+        [Bind(EventName.ON_REWARDING_COMPLETE)]
+        private void OnInitState()
+        {
+            Settings.Fsm.Change("Init");
         }
     }
 }

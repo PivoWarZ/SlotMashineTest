@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using AxGrid.Base;
 using AxGrid.Model;
+using AxGrid.Path;
+using ChocDino.UIFX;
 using MyTestEx.Scripts.Rewards;
 using UnityEngine;
 
@@ -29,50 +31,51 @@ namespace MyTestEx.Scripts.UI
             
             Model.EventManager.Invoke(EventName.ON_REWARDING_START);
         }
-
-
-
-        [Bind(EventName.ON_SPINNING_COMPLETE)]
-        private void OnCloser()
+        
+        [Bind(ON_SPIN_REWARD_SPEED_CHANGED)]
+        private void SetSpeed(float speed)
         {
-            _targetReward = GetTargetReward();
-            _isStopped = true;
-        }
-
-        private void StopSpinning(Reward targetReward)
-        {
-            _speed = targetReward.Rect.localPosition.y > GetTargetPosition()
-                ? _speed
-                : 0f;
-        }
-
-        private Reward GetTargetReward()
-        {
-            var targetReward = _rewards
-                .Where(r => r.transform.localPosition.y > GetTargetPosition())
-                .OrderBy(r => Mathf.Abs(r.transform.localPosition.y))
-                .FirstOrDefault();
-            
-            return targetReward;
-        }
-
-        private float GetTargetPosition()
-        {
-            return - _rectTransform.rect.height / _rewards.Length;
+            _speed = speed;
         }
         
-
         [OnUpdate]
         private void UpdateThis()
         {
             if (_isStopped)
             {
                 StopSpinning(_targetReward);
+
+                if (_speed == 0)
+                {
+                    AnimateReward();
+                    _isStopped = false;
+                    Model.EventManager.Invoke(EventName.ON_REWARDING_COMPLETE);
+                }
             }
             
             Spin();
         }
+        
+        private void StopSpinning(Reward targetReward)
+        {
+            _speed = targetReward.Rect.localPosition.y > GetTargetPosition()
+                ? _speed
+                : 0f;
+        }
+        
+        private float GetTargetPosition()
+        {
+            return - _rectTransform.rect.height / _rewards.Length;
+        }
 
+        private void AnimateReward()
+        {
+            var glow = _targetReward.gameObject.GetComponentInChildren<FilterBase>();
+            Path = new CPath();
+            Path.EasingLinear(0.5f, 0f, 1f, value => glow.Strength = value)
+                .EasingLinear(0.5f, 1f, 0f, value => glow.Strength = value);
+        }
+        
         private void Spin()
         {
             foreach (var reward in _rewards)
@@ -87,16 +90,27 @@ namespace MyTestEx.Scripts.UI
                 }
             }
         }
-
+        
         private bool NeedUp(RectTransform rect)
         {
             return rect.localPosition.y < -_rectTransform.rect.height;
         }
         
-        [Bind(ON_SPIN_REWARD_SPEED_CHANGED)]
-        private void SetSpeed(float speed)
+        [Bind(EventName.ON_SPINNING_COMPLETE)]
+        private void OnCloser()
         {
-            _speed = speed;
+            _targetReward = GetTargetReward();
+            _isStopped = true;
+        }
+
+        private Reward GetTargetReward()
+        {
+            var targetReward = _rewards
+                .Where(r => r.transform.localPosition.y > GetTargetPosition())
+                .OrderBy(r => Mathf.Abs(r.transform.localPosition.y))
+                .FirstOrDefault();
+            
+            return targetReward;
         }
     }
 }
