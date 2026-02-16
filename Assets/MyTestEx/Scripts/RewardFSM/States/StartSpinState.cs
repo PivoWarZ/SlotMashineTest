@@ -1,5 +1,4 @@
 ﻿using AxGrid.FSM;
-using UnityEngine;
 
 namespace MyTestEx.Scripts.RewardFSM.States
 {
@@ -21,13 +20,10 @@ namespace MyTestEx.Scripts.RewardFSM.States
         [Loop(LOOP_TIME)]
         private void ChangeSpeed()
         {
-            Debug.Log($"LooPING {_deltaSpeed}");
             Model.Set(VariableName.SPIN_REWARD_SPEED, Model.GetFloat(VariableName.SPIN_REWARD_SPEED) + _deltaSpeed);
 
             if (Model.GetFloat(VariableName.SPIN_REWARD_SPEED) <= Model.GetFloat(VariableName.MAX_SPIN_SPEED))
             {
-                Debug.Log($"SPEED {Model.GetFloat(VariableName.SPIN_REWARD_SPEED)}");
-                Debug.Log($"MAX {Model.GetFloat(VariableName.MAX_SPIN_SPEED)}");
                 Parent.Change("Spinning");
             }
         }

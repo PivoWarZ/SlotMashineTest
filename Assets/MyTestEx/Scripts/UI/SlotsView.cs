@@ -62,8 +62,6 @@ namespace MyTestEx.Scripts.UI
         }
         
 
-
-
         [OnUpdate]
         private void UpdateThis()
         {

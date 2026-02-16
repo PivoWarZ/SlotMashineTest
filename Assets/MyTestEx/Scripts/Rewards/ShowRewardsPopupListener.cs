@@ -11,7 +11,7 @@ namespace MyTestEx.Scripts.Rewards
         private void OnShowRewardPopup()
         {
             var canvas = GameObject.FindObjectOfType<Canvas>().transform;
-            var prefab = Resources.Load("Prefabs/SlotsMain");
+            var prefab = Resources.Load("Prefabs/SlotsMaskable");
             var popup = Instantiate(prefab, canvas) as GameObject;
             CanvasGroup group = popup.GetComponent<CanvasGroup>();
 
